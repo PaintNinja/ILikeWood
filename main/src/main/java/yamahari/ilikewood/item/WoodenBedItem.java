@@ -1,6 +1,5 @@
 package yamahari.ilikewood.item;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -11,7 +10,7 @@ import javax.annotation.Nonnull;
 
 public final class WoodenBedItem extends WoodenBlockItem {
     public WoodenBedItem(final WoodenBlockType bedBlockType, final Block block) {
-        super(bedBlockType, block, (new Item.Properties()).tab(CreativeModeTab.TAB_DECORATIONS));
+        super(bedBlockType, block, (new Item.Properties()));
     }
 
     @Override

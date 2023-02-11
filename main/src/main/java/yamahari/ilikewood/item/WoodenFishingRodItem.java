@@ -1,6 +1,5 @@
 package yamahari.ilikewood.item;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,7 @@ public final class WoodenFishingRodItem extends FishingRodItem implements IWoode
     private final IWoodType woodType;
 
     public WoodenFishingRodItem(final IWoodType woodType) {
-        super((new Item.Properties()).durability(64).tab(CreativeModeTab.TAB_TOOLS));
+        super((new Item.Properties()).durability(64));
         this.woodType = woodType;
     }
 

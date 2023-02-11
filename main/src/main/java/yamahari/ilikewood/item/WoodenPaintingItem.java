@@ -28,7 +28,7 @@ public final class WoodenPaintingItem
 
     public WoodenPaintingItem(final IWoodType woodType)
     {
-        super(EntityType.PAINTING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS));
+        super(EntityType.PAINTING, new Item.Properties());
         this.woodType = woodType;
         // noinspection unchecked
         this.entityType =

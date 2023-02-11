@@ -28,10 +28,8 @@ public final class WoodenHoeItem extends HoeItem implements IWooden, IWoodenTier
             0,
             0.0F,
             woodenItemTier.equals(VanillaWoodenItemTiers.NETHERITE)
-            ? (new Item.Properties()
-                   .tab(CreativeModeTab.TAB_TOOLS)
-                   .fireResistant())
-            : (new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
+            ? (new Item.Properties().fireResistant())
+            : (new Item.Properties()));
         this.woodType = woodType;
         this.woodenItemTier = woodenItemTier;
     }

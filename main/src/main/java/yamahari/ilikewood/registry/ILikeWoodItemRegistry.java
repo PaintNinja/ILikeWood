@@ -1,6 +1,5 @@
 package yamahari.ilikewood.registry;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -89,7 +88,7 @@ public final class ILikeWoodItemRegistry
     private RegistryObject<Item> registerStickItem(final IWoodType woodType)
     {
         return this.register(woodType, WoodenItemType.STICK,
-            () -> new WoodenItem(woodType, WoodenItemType.STICK, new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS))
+            () -> new WoodenItem(woodType, WoodenItemType.STICK, new Item.Properties())
         );
     }
 

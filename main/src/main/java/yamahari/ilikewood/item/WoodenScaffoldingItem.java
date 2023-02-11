@@ -22,7 +22,7 @@ public final class WoodenScaffoldingItem
 {
     public WoodenScaffoldingItem(final Block block)
     {
-        super(WoodenBlockType.SCAFFOLDING, block, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS));
+        super(WoodenBlockType.SCAFFOLDING, block, new Item.Properties());
     }
 
     @Nullable

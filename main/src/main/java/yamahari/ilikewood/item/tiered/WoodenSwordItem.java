@@ -26,10 +26,8 @@ public final class WoodenSwordItem extends SwordItem implements IWooden, IWooden
             0,
             0.f,
             woodenItemTier.equals(VanillaWoodenItemTiers.NETHERITE)
-            ? (new Item.Properties()
-                   .tab(CreativeModeTab.TAB_TOOLS)
-                   .fireResistant())
-            : (new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
+            ? (new Item.Properties().fireResistant())
+            : (new Item.Properties()));
         this.woodType = woodType;
         this.woodenItemTier = woodenItemTier;
     }

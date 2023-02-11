@@ -14,7 +14,7 @@ public final class WoodenBowItem extends BowItem implements IWooden {
     private final IWoodType woodType;
 
     public WoodenBowItem(final IWoodType woodType) {
-        super(new Item.Properties().durability(384).tab(CreativeModeTab.TAB_COMBAT));
+        super(new Item.Properties().durability(384));
         this.woodType = woodType;
     }
 

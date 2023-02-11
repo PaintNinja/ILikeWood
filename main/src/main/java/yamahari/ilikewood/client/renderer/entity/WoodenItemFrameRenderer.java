@@ -1,7 +1,7 @@
 package yamahari.ilikewood.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -11,11 +11,11 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -49,8 +49,8 @@ public class WoodenItemFrameRenderer extends EntityRenderer<WoodenItemFrameEntit
         matrixStackIn.translate((double) direction.getStepX() * d0,
             (double) direction.getStepY() * d0,
             (double) direction.getStepZ() * d0);
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(itemFrame.getXRot()));
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - itemFrame.getYRot()));
+        matrixStackIn.mulPose(Axis.XP.rotationDegrees(itemFrame.getXRot()));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(180.0F - itemFrame.getYRot()));
         final boolean invisible = itemFrame.isInvisible();
         final ItemStack displayedItem = itemFrame.getItem();
         if (!invisible) {
@@ -84,9 +84,9 @@ public class WoodenItemFrameRenderer extends EntityRenderer<WoodenItemFrameEntit
                 } else {
                     matrixStackIn.translate(0.0D, 0.0D, 0.4375D);
                 }
-                matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(
+                matrixStackIn.mulPose(Axis.ZP.rotationDegrees(
                     (float) (itemFrame.getRotation() % 4 * 2) * 360.0F / 8.0F));
-                matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+                matrixStackIn.mulPose(Axis.ZP.rotationDegrees(180.0F));
                 final float f = 0.0078125F;
                 matrixStackIn.scale(f, f, f);
                 matrixStackIn.translate(-64.0D, -64.0D, 0.0D);
@@ -97,15 +97,15 @@ public class WoodenItemFrameRenderer extends EntityRenderer<WoodenItemFrameEntit
                     .render(matrixStackIn, bufferIn, mapId, mapdata, true, packedLightIn);
             } else {
                 if (direction == Direction.DOWN || direction == Direction.UP) {
-                    matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-                    matrixStackIn.mulPose(Vector3f.YP.rotationDegrees((float) itemFrame.getRotation() * 360.0F / 8.0F));
+                    matrixStackIn.mulPose(Axis.XP.rotationDegrees(-90.0F));
+                    matrixStackIn.mulPose(Axis.YP.rotationDegrees((float) itemFrame.getRotation() * 360.0F / 8.0F));
                 } else {
                     if (invisible) {
                         matrixStackIn.translate(0.0D, 0.0D, 0.5D);
                     } else {
                         matrixStackIn.translate(0.0D, 0.0D, 0.4375D);
                     }
-                    matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees((float) itemFrame.getRotation() * 360.0F / 8.0F));
+                    matrixStackIn.mulPose(Axis.ZP.rotationDegrees((float) itemFrame.getRotation() * 360.0F / 8.0F));
                 }
                 matrixStackIn.scale(0.5F, 0.5F, 0.5F);
                 this.itemRenderer.renderStatic(displayedItem,
@@ -135,7 +135,7 @@ public class WoodenItemFrameRenderer extends EntityRenderer<WoodenItemFrameEntit
     @Nonnull
     @Override
     public ResourceLocation getTextureLocation(@Nonnull final WoodenItemFrameEntity entity) {
-        return TextureAtlas.LOCATION_BLOCKS;
+        return InventoryMenu.BLOCK_ATLAS;
     }
 
     @Override

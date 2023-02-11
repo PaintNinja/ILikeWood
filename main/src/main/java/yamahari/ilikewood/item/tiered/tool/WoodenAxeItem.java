@@ -29,10 +29,8 @@ public final class WoodenAxeItem extends AxeItem implements IWooden, IWoodenTier
             0.0F,
             0.0F,
             woodenItemTier.equals(VanillaWoodenItemTiers.NETHERITE)
-            ? (new Item.Properties()
-                   .tab(CreativeModeTab.TAB_TOOLS)
-                   .fireResistant())
-            : (new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
+            ? (new Item.Properties().fireResistant())
+            : (new Item.Properties()));
         this.woodType = woodType;
         this.woodenItemTier = woodenItemTier;
     }

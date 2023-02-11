@@ -1,6 +1,5 @@
 package yamahari.ilikewood.item;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,7 @@ public final class WoodenCrossbowItem extends CrossbowItem implements IWooden {
     private final IWoodType woodType;
 
     public WoodenCrossbowItem(final IWoodType woodType) {
-        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT).durability(326));
+        super(new Item.Properties().stacksTo(1).durability(326));
         this.woodType = woodType;
     }
 

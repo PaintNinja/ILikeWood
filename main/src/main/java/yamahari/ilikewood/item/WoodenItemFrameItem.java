@@ -27,7 +27,7 @@ public final class WoodenItemFrameItem extends WoodenItem {
     private final Supplier<EntityType<? extends ItemFrame>> entityType;
 
     public WoodenItemFrameItem(final IWoodType woodType) {
-        super(woodType, WoodenItemType.ITEM_FRAME, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS));
+        super(woodType, WoodenItemType.ITEM_FRAME, new Item.Properties());
         // noinspection unchecked
         this.entityType =
             Suppliers.memoize(() -> (EntityType<? extends ItemFrame>) ILikeWood.ENTITY_TYPE_REGISTRY.getObject(this.getWoodType(),

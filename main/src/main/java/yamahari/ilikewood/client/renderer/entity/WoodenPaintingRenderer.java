@@ -1,20 +1,25 @@
 package yamahari.ilikewood.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.PaintingRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.Painting;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.common.MinecraftForge;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import yamahari.ilikewood.ILikeWood;
 import yamahari.ilikewood.entity.WoodenPaintingEntity;
 
@@ -45,7 +50,7 @@ public final class WoodenPaintingRenderer
             if (planks != null)
             {
                 poseStack.pushPose();
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - p_115553_));
+                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - p_115553_));
                 final var variant = painting.getVariant().value();
                 poseStack.scale(0.0625F, 0.0625F, 0.0625F);
                 final var textureManager = Minecraft.getInstance().getPaintingTextures();
@@ -170,7 +175,7 @@ public final class WoodenPaintingRenderer
                 this.vertex(pose, normal, consumer, xx1, yy0, imageU0, imageV1, -0.6F, 0, 0, -1, lightColor);
                 this.vertex(pose, normal, consumer, xx0, yy0, imageU1, imageV1, -0.6F, 0, 0, -1, lightColor);
 
-                consumer = multiBufferSource.getBuffer(RenderType.entitySolid(TextureAtlas.LOCATION_BLOCKS));
+                consumer = multiBufferSource.getBuffer(RenderType.entitySolid(InventoryMenu.BLOCK_ATLAS));
 
                 this.vertex(pose, normal, consumer, x0, y1, frameU0, frameV1, -0.5F, 0, 0, -1, lightColor);
                 this.vertex(pose, normal, consumer, x1, y1, frameU1, frameV1, -0.5F, 0, 0, -1, lightColor);
@@ -203,5 +208,9 @@ public final class WoodenPaintingRenderer
                 this.vertex(pose, normal, consumer, x1, y0, frameU0, frameV0, 0.5F, 1, 0, 0, lightColor);
             }
         }
+    }
+
+    private void vertex(Matrix4f p_253885_, Matrix3f p_253799_, VertexConsumer p_254114_, float p_254164_, float p_254459_, float p_254183_, float p_253615_, float p_254448_, int p_253660_, int p_254342_, int p_253757_, int p_254101_) {
+        p_254114_.vertex(p_253885_, p_254164_, p_254459_, p_254448_).color(255, 255, 255, 255).uv(p_254183_, p_253615_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(p_254101_).normal(p_253799_, (float)p_253660_, (float)p_254342_, (float)p_253757_).endVertex();
     }
 }

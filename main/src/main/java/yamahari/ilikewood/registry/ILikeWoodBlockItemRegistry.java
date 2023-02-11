@@ -31,19 +31,19 @@ public final class ILikeWoodBlockItemRegistry
     @Override
     protected void register()
     {
-        this.registerBlockItems(WoodenBlockType.PANELS, this::registerPanelsBlockItem);
-        this.registerBlockItems(WoodenBlockType.PANELS_STAIRS, this::registerPanelsStairsBlockItem);
-        this.registerBlockItems(WoodenBlockType.PANELS_SLAB, this::registerPanelsSlabBlockItem);
-        this.registerBlockItems(WoodenBlockType.BOOKSHELF, this::registerBookshelfBlockItem);
+        this.registerBlockItems(WoodenBlockType.PANELS);
+        this.registerBlockItems(WoodenBlockType.PANELS_STAIRS);
+        this.registerBlockItems(WoodenBlockType.PANELS_SLAB);
+        this.registerBlockItems(WoodenBlockType.BOOKSHELF);
         this.registerBlockItems(WoodenBlockType.BARREL, this::registerBarrelBlockItem);
-        this.registerBlockItems(WoodenBlockType.WALL, this::registerWallBlockItem);
-        this.registerBlockItems(WoodenBlockType.LADDER, this::registerLadderBlockItem);
-        this.registerBlockItems(WoodenBlockType.CRAFTING_TABLE, this::registerCraftingTableBlockItem);
+        this.registerBlockItems(WoodenBlockType.WALL);
+        this.registerBlockItems(WoodenBlockType.LADDER);
+        this.registerBlockItems(WoodenBlockType.CRAFTING_TABLE);
         this.registerBlockItems(WoodenBlockType.POST, this::registerPostBlockItem);
         this.registerBlockItems(WoodenBlockType.STRIPPED_POST, this::registerStrippedPostBlockItem);
         this.registerBlockItems(WoodenBlockType.SAWMILL, this::registerSawmillBlockItem);
-        this.registerBlockItems(WoodenBlockType.COMPOSTER, this::registerComposterBlockItem);
-        this.registerBlockItems(WoodenBlockType.LECTERN, this::registerLecternBlockItem);
+        this.registerBlockItems(WoodenBlockType.COMPOSTER);
+        this.registerBlockItems(WoodenBlockType.LECTERN);
         this.registerBlockItems(WoodenBlockType.CHEST, this::registerChestBlockItem);
         this.registerBlockItems(WoodenBlockType.TORCH, this::registerTorchBlockItem);
         this.registerBlockItems(WoodenBlockType.SOUL_TORCH, this::registerSoulTorchBlockItem);
@@ -53,8 +53,8 @@ public final class ILikeWoodBlockItemRegistry
         this.registerBlockItems(WoodenBlockType.STOOL, this::registerStoolBlockItem);
         this.registerBlockItems(WoodenBlockType.SINGLE_DRESSER, this::registerSingleDresserBlockItem);
         this.registerBlockItems(WoodenBlockType.LOG_PILE, this::registerLogPileBlockItem);
-        this.registerBlockItems(WoodenBlockType.CAMPFIRE, this::registerCampfireBlockItem);
-        this.registerBlockItems(WoodenBlockType.SOUL_CAMPFIRE, this::registerSoulCampfireBlockItem);
+        this.registerBlockItems(WoodenBlockType.CAMPFIRE);
+        this.registerBlockItems(WoodenBlockType.SOUL_CAMPFIRE);
         WoodenBlockType.getBeds().forEach(bedBlockType -> this.registerBlockItems(bedBlockType, woodType -> this.registerBedBlockItem(woodType, bedBlockType)));
         this.registerBlockItems(WoodenBlockType.CRATE, this::registerCrateBlockItem);
     }
@@ -66,6 +66,20 @@ public final class ILikeWoodBlockItemRegistry
             .getWoodTypes()
             .filter(woodType -> woodType.getBlockTypes().contains(blockType))
             .map(woodType -> this.getRegistryObject(woodType, blockType));
+    }
+
+    private void registerBlockItems(final WoodenBlockType blockType)
+    {
+        if (blockType.isEnabled())
+        {
+            final Function<IWoodType, RegistryObject<Item>> function = woodType -> this.registerBlockItem(woodType, blockType);
+            final Map<IWoodType, RegistryObject<Item>> blockItems = new HashMap<>();
+            ILikeWood.WOOD_TYPE_REGISTRY
+                    .getWoodTypes()
+                    .filter(woodType -> woodType.getBlockTypes().contains(blockType))
+                    .forEach(woodType -> blockItems.put(woodType, function.apply(woodType)));
+            this.registryObjects.put(blockType, Collections.unmodifiableMap(blockItems));
+        }
     }
 
     private void registerBlockItems(
@@ -85,6 +99,14 @@ public final class ILikeWoodBlockItemRegistry
     }
 
     private RegistryObject<Item> registerBlockItem(
+            final IWoodType woodType,
+            final WoodenBlockType blockType
+    )
+    {
+        return this.registerBlockItem(woodType, blockType, new Item.Properties());
+    }
+
+    private RegistryObject<Item> registerBlockItem(
         final IWoodType woodType,
         final WoodenBlockType blockType,
         final Item.Properties properties
@@ -92,23 +114,6 @@ public final class ILikeWoodBlockItemRegistry
     {
         final RegistryObject<Block> block = ILikeWood.BLOCK_REGISTRY.getRegistryObject(woodType, blockType);
         return this.registry.register(block.getId().getPath(), () -> new WoodenBlockItem(blockType, block.get(), properties));
-    }
-
-    private RegistryObject<Item> registerBlockItem(
-        final IWoodType woodType,
-        final WoodenBlockType blockType,
-        final CreativeModeTab itemGroup
-    )
-    {
-        return this.registerBlockItem(woodType, blockType, new Item.Properties().tab(itemGroup));
-    }
-
-    private RegistryObject<Item> registerBuildingBlockItem(
-        final IWoodType woodType,
-        final WoodenBlockType blockType
-    )
-    {
-        return this.registerBlockItem(woodType, blockType, CreativeModeTab.TAB_BUILDING_BLOCKS);
     }
 
     private RegistryObject<Item> registerDecorationBlockItem(
@@ -119,66 +124,15 @@ public final class ILikeWoodBlockItemRegistry
         return this.registerBlockItem(woodType, blockType, CreativeModeTab.TAB_DECORATIONS);
     }
 
-    private RegistryObject<Item> registerMiscBlockItem(
-        final IWoodType woodType,
-        final WoodenBlockType blockType
-    )
-    {
-        return this.registerBlockItem(woodType, blockType, CreativeModeTab.TAB_MISC);
-    }
-
-    private RegistryObject<Item> registerRedstoneBlockItem(
-        final IWoodType woodType,
-        final WoodenBlockType blockType
-    )
-    {
-        return this.registerBlockItem(woodType, blockType, CreativeModeTab.TAB_REDSTONE);
-    }
-
-    private RegistryObject<Item> registerPanelsBlockItem(final IWoodType woodType)
-    {
-        return this.registerBuildingBlockItem(woodType, WoodenBlockType.PANELS);
-    }
-
-    private RegistryObject<Item> registerPanelsStairsBlockItem(final IWoodType woodType)
-    {
-        return this.registerBuildingBlockItem(woodType, WoodenBlockType.PANELS_STAIRS);
-    }
-
-    private RegistryObject<Item> registerPanelsSlabBlockItem(final IWoodType woodType)
-    {
-        return this.registerBuildingBlockItem(woodType, WoodenBlockType.PANELS_SLAB);
-    }
-
-    private RegistryObject<Item> registerBookshelfBlockItem(final IWoodType woodType)
-    {
-        return this.registerBuildingBlockItem(woodType, WoodenBlockType.BOOKSHELF);
-    }
-
     private RegistryObject<Item> registerBarrelBlockItem(final IWoodType woodType)
     {
         return this.registerDecorationBlockItem(woodType, WoodenBlockType.BARREL);
-    }
-
-    private RegistryObject<Item> registerWallBlockItem(final IWoodType woodType)
-    {
-        return this.registerDecorationBlockItem(woodType, WoodenBlockType.WALL);
-    }
-
-    private RegistryObject<Item> registerLadderBlockItem(final IWoodType woodType)
-    {
-        return this.registerDecorationBlockItem(woodType, WoodenBlockType.LADDER);
     }
 
     private RegistryObject<Item> registerScaffoldingBlockItem(final IWoodType woodType)
     {
         final RegistryObject<Block> scaffoldingBlock = ILikeWood.BLOCK_REGISTRY.getRegistryObject(woodType, WoodenBlockType.SCAFFOLDING);
         return this.registry.register(scaffoldingBlock.getId().getPath(), () -> new WoodenScaffoldingItem(scaffoldingBlock.get()));
-    }
-
-    private RegistryObject<Item> registerCraftingTableBlockItem(final IWoodType woodType)
-    {
-        return this.registerDecorationBlockItem(woodType, WoodenBlockType.CRAFTING_TABLE);
     }
 
     private RegistryObject<Item> registerPostBlockItem(final IWoodType woodType)
@@ -194,16 +148,6 @@ public final class ILikeWoodBlockItemRegistry
     private RegistryObject<Item> registerSawmillBlockItem(final IWoodType woodType)
     {
         return this.registerDecorationBlockItem(woodType, WoodenBlockType.SAWMILL);
-    }
-
-    private RegistryObject<Item> registerComposterBlockItem(final IWoodType woodType)
-    {
-        return this.registerMiscBlockItem(woodType, WoodenBlockType.COMPOSTER);
-    }
-
-    private RegistryObject<Item> registerLecternBlockItem(final IWoodType woodType)
-    {
-        return this.registerRedstoneBlockItem(woodType, WoodenBlockType.LECTERN);
     }
 
     private RegistryObject<Item> registerChestBlockItem(final IWoodType woodType)
@@ -231,7 +175,7 @@ public final class ILikeWoodBlockItemRegistry
         final RegistryObject<Block> wallTorch = ILikeWood.BLOCK_REGISTRY.getRegistryObject(woodType, wallTorchBlockType);
         return this.registry.register(
             torch.getId().getPath(),
-            () -> new WoodenWallOrFloorItem(torchBlockType, torch.get(), wallTorch.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS))
+            () -> new WoodenWallOrFloorItem(torchBlockType, torch.get(), wallTorch.get(), new Item.Properties())
         );
     }
 
@@ -268,16 +212,6 @@ public final class ILikeWoodBlockItemRegistry
     private RegistryObject<Item> registerLogPileBlockItem(final IWoodType woodType)
     {
         return this.registerDecorationBlockItem(woodType, WoodenBlockType.LOG_PILE);
-    }
-
-    private RegistryObject<Item> registerCampfireBlockItem(final IWoodType woodType)
-    {
-        return this.registerDecorationBlockItem(woodType, WoodenBlockType.CAMPFIRE);
-    }
-
-    private RegistryObject<Item> registerSoulCampfireBlockItem(final IWoodType woodType)
-    {
-        return this.registerDecorationBlockItem(woodType, WoodenBlockType.SOUL_CAMPFIRE);
     }
 
     private RegistryObject<Item> registerCrateBlockItem(final IWoodType woodType)

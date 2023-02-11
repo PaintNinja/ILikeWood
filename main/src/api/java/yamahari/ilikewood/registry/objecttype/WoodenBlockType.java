@@ -95,6 +95,11 @@ public final class WoodenBlockType
         );
     }
 
+    public static Stream<WoodenBlockType> getTorches()
+    {
+        return Stream.of(SOUL_TORCH, TORCH, WALL_TORCH, WALL_SOUL_TORCH);
+    }
+
     @Override
     public boolean acceptVisitor(final IObjectTypeVisitor visitor)
     {
